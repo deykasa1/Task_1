@@ -1,0 +1,17 @@
+#!/bin/bash
+
+input_directory=$1
+output_directory=$2
+
+find "$input_directory" -type f | while read file; do
+    base=$(basename "$file")
+    if [ -f "${output_directory}/${base}" ]; then
+        i=1
+        while [ -f "${output_directory}/${base}.${i}" ]; do
+            i=$((i+1))
+        done
+        cp "$file" "${output_directory}/${base}.${i}"
+    else
+        cp "$file" "$output_directory"
+    fi
+done
